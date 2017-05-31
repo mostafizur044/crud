@@ -1,0 +1,34 @@
+<table class="table" >
+  <caption class="lead">Products</caption>
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Description</th>
+      <th>Price</th>
+	  <th> Actions </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="product in products | startFrom:(currentPage - 1) * itemsPerPage | limitTo: itemsPerPage">
+      <td>{{product.sku}}</td>
+      <td>{{product.description}}</td>
+      <td>{{product.price | currency}}</td>
+	  <td><a href="#/edit/{{product.$id}}" class="btn btn-small btn-primary">Edit</a> <a class="btn btn-small btn-danger" ng-click="removeProduct(product.$id)">Delete</a></td>
+	  
+    </tr>
+  </tbody>
+</table>
+<p>
+    <a href="#/add" class="btn btn-success" role="button">Add New Product</a>
+</p>
+
+<div>
+  <select ng-model="viewby" ng-change="setItemsPerPage(viewby)">
+    <option ng-repeat="x in numItem">{{x}}</option>
+  </select> records at a time.
+  </div>
+
+<p uib-pagination total-items="products.length" ng-model='currentPage' max-size='maxSize' items-per-page='itemsPerPage' boundary-links='true' num-pages="numPages" previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;" force-ellipses="true">
+  </p>
+
+  <pre>Page: {{currentPage}} / {{numPages}}</pre>
